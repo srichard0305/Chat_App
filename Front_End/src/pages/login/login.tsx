@@ -1,13 +1,39 @@
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
-const login = () => {
+interface Inputs {
+    username: string;
+    password: string;  
+}
+
+const Login: React.FC = () => {
+
+    const [inputs, setInputs] = useState<Inputs>({
+            username: "",
+            password: "",
+    });
+    
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(inputs);
+    };
+    
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setInputs((prevState) => ({
+            ...prevState,
+            [name]: value
+         }));
+    }
+
   return (
     <div className = "flex flex-col items-center justify-center min-w-96 mx-auto">
-        <div className = "w-full p-6 rounded-lg shadow-md text-blue-600 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
-            <h1 className = "text-3xl font-semibold text-center text-gray-600">Login
-                <span className = "text-red-400"> Chat App</span>
+        <div className = "w-full p-6 rounded-lg shadow-md text-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
+            <h1 className = "text-3xl font-semibold text-center text-gray-600">Login to
+                <span className = "text-red-400"> Chat!</span>
             </h1>
 
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <label className = "label p-2">
                         <span className = "text-base label-text text-blue-600">Username</span>
@@ -21,7 +47,10 @@ const login = () => {
                         </svg>
                     </label>
                         
-                    <input type = "text" placeholder = "Username" className = "w-full input input-bordered h-10"></input> 
+                    <input type = "text" name="username" placeholder = "Username" className = "w-full input input-bordered h-10"
+                        value={inputs.username}
+                        onChange={handleChange}
+                    />
                 </div>
                 <div>
                     <label className = "label p-2">
@@ -37,9 +66,12 @@ const login = () => {
                             clipRule="evenodd" />
                     </svg>
                     </label>
-                    <input type = "text" placeholder = "Password" className = "w-full input input-bordered h-10"></input> 
+                    <input type = "text" name="password" placeholder = "Password" className = "w-full input input-bordered h-10"
+                        value={inputs.password}
+                        onChange={handleChange}
+                    />
                 </div>
-                <a href = "#" className = "text-sm hover:underline hover:text-blue-600 mt-2 inline-block">Sign Up</a>
+                <Link to="/signup" className = "text-sm hover:underline hover:text-blue-600 mt-2 inline-block">Sign Up</Link>
                 <div>
                     <button className = "btn btn-block btn-sm mt-2">Login</button>
                 </div>
@@ -49,4 +81,4 @@ const login = () => {
     </div>
   )
 }
-export default login;
+export default Login;

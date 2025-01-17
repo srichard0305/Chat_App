@@ -8,7 +8,7 @@ export const signup = async (req, res) => {
         const {fullName, username, password, confirmPassword} = req.body;
 
         if(password < 8){
-            return res.status(400).json({error:"Password must be longer larger then 9 characters"});
+            return res.status(400).json({error:"Password must at least 8 characters"});
         }
 
         //check if passwords entered are the same
@@ -31,7 +31,7 @@ export const signup = async (req, res) => {
             fullName:fullName,
             username:username,
             password:hashedPassword,
-            profilepic:"../img/defualt_profilepic.jpg"
+            profilepic:"defualt_profilepic.jpg"
         });
 
         if(newUser){
