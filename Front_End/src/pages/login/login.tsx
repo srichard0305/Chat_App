@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import useLogin from '../../hooks/useLogin';
 
 interface Inputs {
     username: string;
@@ -8,6 +9,8 @@ interface Inputs {
 
 const Login: React.FC = () => {
 
+    const {loading, login} = useLogin();
+
     const [inputs, setInputs] = useState<Inputs>({
             username: "",
             password: "",
@@ -15,7 +18,7 @@ const Login: React.FC = () => {
     
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(inputs);
+        login(inputs);
     };
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +76,12 @@ const Login: React.FC = () => {
                 </div>
                 <Link to="/signup" className = "text-sm hover:underline hover:text-blue-600 mt-2 inline-block">Sign Up</Link>
                 <div>
-                    <button className = "btn btn-block btn-sm mt-2">Login</button>
+                     {!loading ? (
+                            <button className = "btn btn-block btn-sm mt-2">Login</button>
+                          ) : (
+                            <span className="loading loading-spinner"></span>
+                          )}
+                    
                 </div>
             </form>
 

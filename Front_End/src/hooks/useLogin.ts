@@ -3,54 +3,42 @@ import { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useAuthContext } from '../context/authContext';
 
-//hook for connecting signup page with backend 
+//hook for connecting login page with backend 
 
-const handleInputErrors = ({fullName, username, password, confirmPassword} : {
-    fullName: string;
+const handleInputErrors = ({username, password} : {
     username: string;
     password: string;
-    confirmPassword: string;
 }): boolean => {
-    if(!fullName || !username || !password || !confirmPassword){
+    if(!username || !password){
         toast.error("All fields are required")
-        return false;
-    }
-    if (password !== confirmPassword) {
-        toast.error("Passwords do not match")
-        return false;
-    }
-    if (password.length < 6) {
-        toast.error("Password must be at least 8 characters")
         return false;
     }
     return true;
 };
 
-const useSignup = () => {
+const useLogin = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const {setAuthUser} = useAuthContext();
 
-    const signup = async({fullName, username, password, confirmPassword} : {
-        fullName: string;
+    const login = async({username, password} : {
         username: string;
         password: string;
-        confirmPassword: string;
     }) => {
         
-        const noErrors = handleInputErrors({fullName, username, password, confirmPassword})
+        const noErrors = handleInputErrors({username, password})
         if(!noErrors) return;
         
         setLoading(true);
         try {
-            const res = await fetch("/api/auth/signup", {
+            const res = await fetch("/api/auth/login", {
                 method: "POST",
                 headers: {"Content-type": "application/json"},
-                body: JSON.stringify({fullName, username, password, confirmPassword})
+                body: JSON.stringify({username, password})
             });
 
             if(!res.ok){
-                throw new Error("Sign Up Fail. Please try again later")
+                throw new Error("Login Fail. Please try again later")
             } 
 
             const data = await res.json();
@@ -71,8 +59,7 @@ const useSignup = () => {
             setLoading(false);
         }
     } 
-    return { signup, loading, error };
+    return { login, loading, error };
 }
 
-export default useSignup
-
+export default useLogin
