@@ -7,7 +7,7 @@ interface Inputs {
     password: string;  
 }
 
-const Login: React.FC = () => {
+const Login = () => {
 
     const {loading, login} = useLogin();
 
@@ -69,7 +69,7 @@ const Login: React.FC = () => {
                             clipRule="evenodd" />
                     </svg>
                     </label>
-                    <input type = "text" name="password" placeholder = "Password" className = "w-full input input-bordered h-10"
+                    <input type = "password" name="password" placeholder = "Password" className = "w-full input input-bordered h-10"
                         value={inputs.password}
                         onChange={handleChange}
                     />

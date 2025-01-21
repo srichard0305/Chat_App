@@ -4,11 +4,11 @@ import toast from 'react-hot-toast';
 import { useAuthContext } from '../context/authContext';
 
 //hook for connecting login page with backend 
-
-const handleInputErrors = ({username, password} : {
+interface User{
     username: string;
     password: string;
-}): boolean => {
+}
+const handleInputErrors = ({username, password} : User): boolean => {
     if(!username || !password){
         toast.error("All fields are required")
         return false;
@@ -21,10 +21,7 @@ const useLogin = () => {
     const [error, setError] = useState<string | null>(null);
     const {setAuthUser} = useAuthContext();
 
-    const login = async({username, password} : {
-        username: string;
-        password: string;
-    }) => {
+    const login = async({username, password} : User) => {
         
         const noErrors = handleInputErrors({username, password})
         if(!noErrors) return;
@@ -47,7 +44,7 @@ const useLogin = () => {
             }
 
             //set authUser in local storage
-            localStorage.setItem("authUser", JSON.stringify(data))
+            sessionStorage.setItem("authUser", JSON.stringify(data))
 
             //update context of signed in user
             setAuthUser(data);

@@ -1,31 +1,8 @@
+import { useEffect } from "react";
+import useConversation from "../../zustand/useConversation.ts";
 import Messages from "./messages.tsx"
-import SendMessage from "./sendMessage.tsx"
+import SendMessage from "./sendMessageToUser.tsx"
 import { TiMessage } from "react-icons/ti";
-
-const messageContainer = () => {
-  const chatNotSelected = true;
-
-  return (
-    <div className="md:min-w-[450px] flex flex-col">
-      {chatNotSelected ? (
-        noChatSelected()
-      ) :(
-        <> 
-            {/* Header */}
-            <div className="bg-blue-700 px-4 py-2 mb-2">
-                <span className="label-text">To: </span>{" "}
-                <span className="text-white font-bold">John Doe</span>
-            </div>
-            <Messages />
-            <SendMessage />
-        </>
-      )
-    }
-    </div>
-  )
-}
-
-export default messageContainer
 
 const noChatSelected = () =>{
   return (
@@ -39,3 +16,34 @@ const noChatSelected = () =>{
     </div>
   );
 };
+
+const messageContainer = () => {
+  const {selectedConversation,  reset} = useConversation()
+
+  //unmount selected conversation when no longer in browser
+  useEffect(() => {
+    return () => reset()
+  }, []);
+
+  return (
+    <div className="md:min-w-[450px] flex flex-col">
+      {selectedConversation._id === "" ? (
+        noChatSelected()
+      ) :(
+        <> 
+            {/* Header */}
+            <div className="bg-blue-700 px-4 py-2 mb-2">
+                <span className="label-text">To: </span>{" "}
+                <span className="text-white font-bold">{selectedConversation.username}</span>
+            </div>
+            <Messages />
+            <SendMessage />
+        </>
+      )
+    }
+    </div>
+  )
+}
+
+export default messageContainer
+

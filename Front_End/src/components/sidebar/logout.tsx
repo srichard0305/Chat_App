@@ -6,7 +6,6 @@ const Logout = () => {
   const {loading, logout} = useLogout();
 
   const handleLogout = () =>  {
-    console.log("Logout clicked!"); // Add this for debugging
     logout();
   }
 

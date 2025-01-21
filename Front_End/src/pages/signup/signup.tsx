@@ -9,7 +9,7 @@ interface Inputs {
     confirmPassword: string;
 }
 
-const Signup: React.FC  = () => {
+const Signup = () => {
 
     const [inputs, setInputs] = useState<Inputs>({
         fullName: "",
@@ -116,7 +116,9 @@ const Signup: React.FC  = () => {
                 </div>
                 <Link to="/login" className = "text-sm hover:underline hover:text-blue-600 mt-2 inline-block">Login</Link>
                 <div>
-                    <button className = "btn btn-block btn-md mt-2">Sign Up</button>
+                    {!loading? <button className = "btn btn-block btn-md mt-2">Sign Up</button> :
+                        <span className="loading loading-spinner"></span>
+                    }
                 </div>
             </form>
         </div>

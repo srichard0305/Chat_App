@@ -53,7 +53,7 @@ export const getMessages = async (req, res) => {
         }).populate("messages"); // populate the messages array with the actually messages from messages collection 
 
         if(!conversation){
-            res.status(200).json([]);
+            return res.status(200).json([]);
         }
 
         const messages = conversation.messages;

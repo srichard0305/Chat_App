@@ -5,12 +5,14 @@ import { useAuthContext } from '../context/authContext';
 
 //hook for connecting signup page with backend 
 
-const handleInputErrors = ({fullName, username, password, confirmPassword} : {
+interface User{
     fullName: string;
     username: string;
     password: string;
     confirmPassword: string;
-}): boolean => {
+}
+
+const handleInputErrors = ({fullName, username, password, confirmPassword} : User): boolean => {
     if(!fullName || !username || !password || !confirmPassword){
         toast.error("All fields are required")
         return false;
@@ -31,12 +33,7 @@ const useSignup = () => {
     const [error, setError] = useState<string | null>(null);
     const {setAuthUser} = useAuthContext();
 
-    const signup = async({fullName, username, password, confirmPassword} : {
-        fullName: string;
-        username: string;
-        password: string;
-        confirmPassword: string;
-    }) => {
+    const signup = async({fullName, username, password, confirmPassword} : User) => {
         
         const noErrors = handleInputErrors({fullName, username, password, confirmPassword})
         if(!noErrors) return;
@@ -59,7 +56,7 @@ const useSignup = () => {
             }
 
             //set authUser in local storage
-            localStorage.setItem("authUser", JSON.stringify(data))
+            sessionStorage.setItem("authUser", JSON.stringify(data))
 
             //update context of signed in user
             setAuthUser(data);

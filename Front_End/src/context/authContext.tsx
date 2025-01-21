@@ -26,7 +26,7 @@ interface AuthContextProviderProps{
 
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
     const [authUser, setAuthUser] = useState(() => {
-        const storedUser = localStorage.getItem("authUser");
+        const storedUser = sessionStorage.getItem("authUser");
         return storedUser ? JSON.parse(storedUser) : null;
     })
 

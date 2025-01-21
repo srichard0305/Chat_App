@@ -31,7 +31,7 @@ export const signup = async (req, res) => {
             fullName:fullName,
             username:username,
             password:hashedPassword,
-            profilepic:"defualt_profilepic.jpg"
+            profilepic:"default_profilepic.jpg"
         });
 
         if(newUser){

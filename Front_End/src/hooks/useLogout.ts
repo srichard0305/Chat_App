@@ -26,7 +26,7 @@ const useLogout = () => {
             throw new Error(data.error);
         }
 
-        localStorage.removeItem("authUser");
+        sessionStorage.removeItem("authUser");
         setAuthUser(null);
         toast.success("Successfully logged out!");
 
