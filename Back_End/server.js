@@ -6,11 +6,11 @@ import connectToMongoDB from "./db/mongodb_connect.js";
 import authRoutes from "./routes/auth.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import userRoutes from "./routes/users.routes.js";
-import {app, io, server} from './socket/socket.js'
-
-const __dirname = path.resolve();
+import {app, server} from './socket/socket.js'
 
 const PORT = process.env.PORT || 5000; 
+
+const __dirname = path.resolve();
 
 dotenv.config();
 
@@ -31,8 +31,8 @@ app.use("/api/users", userRoutes);
 //for distribution 
 app.use(express.static(path.join(__dirname, '/Front_End/dist')))
 
-app.get("*", (res, req) => {
-    res.sendFile(path.join(__dirname, "Front_End", "dist", "index.html"))
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "Front_End", "dist", "index.html"));
 })
 
 server.listen(5000, () => {
