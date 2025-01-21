@@ -1,5 +1,6 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/messages.model.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 
 export const sendMessage = async (req, res) => {
     try {
@@ -33,6 +34,15 @@ export const sendMessage = async (req, res) => {
         // try await Promise.all(conversation.save(), newMessage.save()) was causing error and going to catch block?
         await conversation.save();
         await newMessage.save();
+
+        const receiverSocketId = getReceiverSocketId(receiverId); 
+        
+        if(receiverSocketId){
+            console.log(`Emitting newMessage to socketId ${receiverSocketId}`);
+            // send message to specific client 
+            io.to(receiverSocketId).emit("newMessage", newMessage);
+        }
+
 
         res.status(201).json(newMessage);
 

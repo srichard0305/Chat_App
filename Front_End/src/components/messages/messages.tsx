@@ -1,9 +1,11 @@
 import { useEffect, useRef } from "react";
 import useGetMessages from "../../hooks/useGetMessages"
 import Message from "./message.tsx"
+import useListenMessages from "../../hooks/useListenMessages.ts";
 
 const messages = () => {
   const {messages, loading} = useGetMessages();
+  useListenMessages();
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
 
   //scroll to last message 
