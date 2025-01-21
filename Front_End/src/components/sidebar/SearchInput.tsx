@@ -8,13 +8,6 @@ interface searchInput{
   searchText: string;
 }
 
-interface Conversation {
-  conversation: {
-    _id: string;
-    username: string;
-  }
-}
-
 const searchInput = () => {
   const [inputs, setInputs] = useState<searchInput>({searchText: ""});
   const {setSelectedConversation} = useConversation()

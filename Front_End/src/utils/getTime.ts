@@ -6,13 +6,15 @@ export function getTime(dateString: string){
     const minutes = padZero(date.getMinutes());
     let isAm = true;
 
-    if(hours > 12) {hours = hours - 12; isAm = false} 
+    if(hours > 11) {isAm = false;}
+    
+    if(hours > 12) {hours = hours - 12;} 
 
     const hoursString = padZero(hours);
 
-    if(isAm)  return `${hours}:${minutes} am`;
+    if(isAm)  return `${hoursString}:${minutes} am`;
 
-    else return `${hours}:${minutes} pm`;
+    else return `${hoursString}:${minutes} pm`;
 }
 
 function padZero(number: number){
